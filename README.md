@@ -1,3 +1,70 @@
+## Config global.css
+When migrate from tailwindcss v3 to tailwindcss v4, we need to change something: 
+First, import font family from Google Font
+```
+@import url("Your url font family")
+@import "tailwindcss"
+```
+
+Second, convert tailwind.config.js into global.css, tailwindcss v4 do not use tailwind.config.js file
+```
+theme: {
+    extend: {
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
+      colors: {
+        "black-100": "#2B2C35",
+        "primary-blue": {
+          DEFAULT: "#2B59FF",
+          100: "#F5F8FF",
+        },
+        "secondary-orange": "#f79761",
+        "light-white": {
+          DEFAULT: "rgba(59,60,152,0.03)",
+          100: "rgba(59,60,152,0.02)",
+        },
+        grey: "#747A88",
+      },
+      backgroundImage: {
+        'pattern': "url('/pattern.png')",
+        'hero-bg': "url('/hero-bg.png')"
+      }
+    },
+  },
+```
+To 
+```
+
+@theme {
+  --font-sans: "Manrope", sans-serif;
+
+  --color-black-100: #2b2c35;
+
+  --color-primary-blue: #2b59ff;
+  --color-primary-blue-100: #f5f8ff;
+
+  --color-secondary-orange: #f79761;
+
+  --color-light-white: rgba(59, 60, 152, 0.03);
+  --color-light-white-100: rgba(59, 60, 152, 0.02);
+
+  --color-grey: #747a88;
+
+  --bg-hero: url("/hero-bg.png");
+  --bg-pattern: url("/pattern.png");
+}
+@utility bg-img-hero {
+  background-image: var(--bg-hero);
+}
+
+@utility bg-img-pattern {
+  background-image: var(--bg-pattern);
+} 
+```
+After that, ignore class `ring-opacity-5` and change class `ring-black` become `ring-black/5`
+We are done! Config tailwindcss v4 completely!
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
