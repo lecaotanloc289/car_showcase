@@ -1,9 +1,21 @@
-import { CarCard, CustomFilter, Hero, SearchBar } from "@/components";
+import { CarCard, CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
+import { fuels, yearsOfProduction } from "@/constants";
+import { FilterProps } from "@/types";
 import { fetchCars } from "@/utils";
-import Image from "next/image";
 
-export default async function Home() {
-  const allCars = await fetchCars();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: FilterProps;
+}) {
+  const params = await searchParams;
+  const allCars = await fetchCars({
+    manufacturer: params.manufacturer || "",
+    year: params.year || 2022,
+    fuel: params.fuel || "",
+    limit: params.limit || 20,
+    model: params.model || "",
+  });
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
   return (
     <main className="overflow-hidden">
@@ -13,11 +25,11 @@ export default async function Home() {
           <h1 className="text-4xl font-extrabold">Car Catalogue</h1>
           <p className="">Explore the cars your might like</p>
         </div>
-        <div className="home__filters">
+        <div className="home__filters inline-flex justify-between">
           <SearchBar />
-          <div className="home__filter-container">
-            <CustomFilter title="fuel" />
-            <CustomFilter title="year" />
+          <div className="home__filter-container my-4">
+            <CustomFilter title="Fuel" options={fuels} />
+            <CustomFilter title="Year" options={yearsOfProduction} />
           </div>
         </div>
         {!isDataEmpty ? (
@@ -27,6 +39,11 @@ export default async function Home() {
                 <CarCard key={car} car={car} />
               ))}
             </div>
+
+            <ShowMore
+              pageNumber={(searchParams.limit || 10) / 10}
+              isNext={!((searchParams.limit || 10) > allCars.length)}
+            />
           </section>
         ) : (
           <div className="home__error-container">

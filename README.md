@@ -1,5 +1,4 @@
 ## Config global.css
-NINJAR_API_KEY=XWpzINer8p9z3K3tacz+Lg==gNN4zEBzskchmsmD
 When migrate from tailwindcss v3 to tailwindcss v4, we need to change something: 
 First, import font family from Google Font
 ```

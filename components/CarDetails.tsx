@@ -1,5 +1,6 @@
 "use client";
 import { CarProps } from "@/types";
+import { generateCarImageUrl } from "@/utils";
 import {
   Dialog,
   DialogPanel,
@@ -62,7 +63,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                   <div className="flex-1 flex flex-col gap-3">
                     <div className="relative w-full h-40 bg-img-pattern bg-cover bg-center rounded-lg">
                       <Image
-                        src={"/hero.png"}
+                        src={generateCarImageUrl(car)}
                         alt="car model"
                         fill
                         priority
@@ -70,13 +71,13 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                       />
                     </div>
                     <div className="flex gap-3">
-                      {[1, 2, 3].map((item) => (
+                      {[29, 33, 13].map((item) => (
                         <div
                           key={item}
                           className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg"
                         >
                           <Image
-                            src={"/hero.png"}
+                            src={generateCarImageUrl(car, `${item}`)}
                             alt="car model"
                             fill
                             priority
