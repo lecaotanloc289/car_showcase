@@ -10,8 +10,8 @@ const CustomButton = ({
   type,
   textStyles,
   rightIcon,
-  isDisabled,
-}: CustomButtonProps) => {
+}: // isDisabled,
+CustomButtonProps) => {
   return (
     <button
       disabled={false}

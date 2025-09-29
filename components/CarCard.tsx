@@ -9,22 +9,9 @@ interface CarCardProps {
   car: CarProps;
 }
 const CarCard = ({ car }: CarCardProps) => {
-  const {
-    city_mpg,
-    combination_mpg,
-    cylinders,
-    displacement,
-    drive,
-    fuel_type,
-    highway_mpg,
-    make,
-    model,
-    transmission,
-    year,
-  } = car;
+  const { city_mpg, drive, make, model, transmission, year } = car;
   const carRent = calculateCarRent(city_mpg, year);
   const [isOpen, setIsOpen] = useState(false);
-  const imgURL = generateCarImageUrl(car);
   return (
     <div className="car-card group">
       <div className="car-card__content">
