@@ -47,13 +47,13 @@ const SearchBar = () => {
   };
   return (
     <form className="searchbar" onSubmit={handleSearch}>
-      <div className="searchbar__item">
-        <SearchManufacturer
-          manufacturer={manufacturer}
-          setManufacturer={setManufacturer}
-        />
-        <SearchButton otherClasses={"sm:hidden"} />
-      </div>
+      <SearchManufacturer
+        manufacturer={manufacturer}
+        setManufacturer={(e) => {
+          setManufacturer(e);
+        }}
+      />
+      <SearchButton otherClasses={"sm:hidden"} />
       <div className="searchbar__item">
         <Image
           src={"/model-icon.png"}
