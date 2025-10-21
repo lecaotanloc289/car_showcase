@@ -7,9 +7,9 @@ import {
   SearchBar,
   ShowMore,
 } from "@/components";
-import { fuels, yearsOfProduction } from "@/constants";
+import { fuels } from "@/constants";
 import { FilterProps } from "@/types";
-import { fetchCarDetails, fetchCars, fetchYears } from "@/utils";
+import { fetchCars, fetchYears } from "@/utils";
 
 export default async function Home({
   searchParams,

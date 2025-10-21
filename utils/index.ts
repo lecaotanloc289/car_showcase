@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CarDetailProps, CarProps, FilterProps } from "@/types";
+import { CarProps, FilterProps } from "@/types";
 const baseUrl = `https://car-api2.p.rapidapi.com/api`;
 const headers = {
   "x-rapidapi-key": `${process.env.RAPID_CAR_API_KEY}`,

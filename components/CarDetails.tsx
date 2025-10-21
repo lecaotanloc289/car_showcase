@@ -1,6 +1,5 @@
 "use client";
 import { CarData, CarProps } from "@/types";
-import { fetchCarDetails, generateCarImageUrl } from "@/utils";
 import {
   Dialog,
   DialogPanel,
@@ -8,7 +7,7 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import Image from "next/image";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 interface CarDetailsProps {
   isOpen: boolean;
