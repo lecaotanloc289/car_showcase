@@ -1,6 +1,5 @@
 "use client";
-import { CarProps } from "@/types";
-import { generateCarImageUrl } from "@/utils";
+import { CarData, CarProps } from "@/types";
 import {
   Dialog,
   DialogPanel,
@@ -8,7 +7,7 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import Image from "next/image";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 interface CarDetailsProps {
   isOpen: boolean;
@@ -16,6 +15,47 @@ interface CarDetailsProps {
   car: CarProps;
 }
 const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
+  const make_id = car.make.id;
+  const make_model_id = car.id;
+  const [data, setData] = useState<CarData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setData(null);
+      return;
+    }
+
+    const loadCarDetails = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `/api/car-details?make_id=${make_id}&make_model_id=${make_model_id}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`API call failed: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+
+        if (result.status === "not_found") {
+          console.warn("Không tìm thấy dữ liệu trim:", result.message);
+          setData(null);
+        } else {
+          setData(result);
+        }
+      } catch (error) {
+        console.error("Failed to fetch car details:", error);
+        setData(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Chạy hàm
+    loadCarDetails();
+  }, [isOpen, make_id, make_model_id]);
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -62,13 +102,20 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                   </button>
                   <div className="flex-1 flex flex-col gap-3">
                     <div className="relative w-full h-40 bg-img-pattern bg-cover bg-center rounded-lg">
-                      <Image
+                      {/* <Image
                         src={generateCarImageUrl(car)}
                         alt="car model"
                         fill
                         priority
                         className="object-contain"
-                      />
+                      /> */}
+                      {isLoading ? (
+                        <div className="flex justify-center items-center h-40">
+                          <p>Loading details...</p>
+                        </div>
+                      ) : data ? (
+                        <p>Dữ liệu: {data?.description}</p>
+                      ) : null}
                     </div>
                     <div className="flex gap-3">
                       {[29, 33, 13].map((item) => (
@@ -76,23 +123,24 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                           key={item}
                           className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg"
                         >
-                          <Image
+                          {/* <Image
                             src={generateCarImageUrl(car, `${item}`)}
                             alt="car model"
                             fill
                             priority
                             className="object-contain"
-                          />
+                          /> */}
                         </div>
                       ))}
                     </div>
                   </div>
                   <div className="flex-1 flex  flex-col gap-2">
                     <h2 className="font-semibold text-xl capitalize">
-                      {car?.make} {car?.model}
+                      {/* {car?.make} */}
+                      {/* {car?.model} */}
                     </h2>
                     <div className="mt-3 flex flex-wrap gap-4">
-                      {Object.entries(car).map(([key, value]) => (
+                      {/* {Object.entries(car).map(([key, value]) => (
                         <div
                           key={key}
                           className="flex justify-between gap-5 w-full text-right"
@@ -104,7 +152,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                             {value}
                           </p>
                         </div>
-                      ))}
+                      ))} */}
                     </div>
                   </div>
                 </DialogPanel>
